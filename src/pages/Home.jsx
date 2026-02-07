@@ -1,4 +1,6 @@
 import RecipeGrid from '../components/RecipeGrid';
+import { useState, useEffect } from 'react';
+import { getPopularRecipes } from '../services/recipeService';
 
 // Static recipe data for template
 const staticRecipes = [
@@ -46,14 +48,25 @@ const staticRecipes = [
   }
 ];
 
-const Home = () => {
+function Home() {
+  const [recipes, setRecipes] = useState([]);
+
+  useEffect(() => {
+    const fetchRecipes = async ()=> {
+      const recipeData = await getPopularRecipes();
+      setRecipes(recipeData);
+    };
+
+    fetchRecipes();
+  }, []);
+
   return (
-    <main className="main-content">
+    <main className='main-content'>
       <div className="content-header">
         <h2>Popular Recipes</h2>
-        <p>Discover delicious recipes for every meal</p>
+        <p>Discover delicous recipes</p>
       </div>
-      <RecipeGrid recipes={staticRecipes} />
+      <RecipeGrid recipes={recipes} />
     </main>
   );
 };

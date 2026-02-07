@@ -3,7 +3,7 @@ const RecipeCard = ({ recipe }) => {
     <div className="recipe-card">
       <div className="recipe-image">
         <img 
-          src="https://placehold.co/300x200/ff6b6b/ffffff?text=Recipe" 
+          src={recipe.image} 
           alt={recipe.title}
         />
       </div>
