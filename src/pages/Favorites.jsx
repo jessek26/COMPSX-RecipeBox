@@ -1,7 +1,13 @@
+import React, { useState, useEffect } from 'react';
 import RecipeGrid from '../components/RecipeGrid';
 
 const Favorites = () => {
-  const favoriteRecipes = [];
+  const [favoriteRecipes, setFavoriteRecipes] = useState([]);
+
+  useEffect(() => {
+    const favorites = JSON.parse(localStorage.getItem('favoriteRecipe')) || [];
+    setFavoriteRecipes(favorites);
+  }, []);
 
   return (
     <main className="main-content">
