@@ -48,7 +48,7 @@ const staticRecipes = [
   }
 ];
 
-function Home() {
+function Home({ searchResults }) {
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
@@ -60,13 +60,15 @@ function Home() {
     fetchRecipes();
   }, []);
 
+  const displayRecipes = searchResults || recipes;
+
   return (
     <main className='main-content'>
       <div className="content-header">
-        <h2>Popular Recipes</h2>
+        <h2>{searchResults ? 'Search Results' : 'Popular Recipes'}</h2>
         <p>Discover delicous recipes</p>
       </div>
-      <RecipeGrid recipes={recipes} />
+      <RecipeGrid recipes={displayRecipes} />
     </main>
   );
 };
