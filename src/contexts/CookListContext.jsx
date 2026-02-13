@@ -1,4 +1,4 @@
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
 
 //create context
 const CookListContext = createContext();
@@ -14,8 +14,15 @@ export function useCookList() {
 }
 
 //create provider component
-export function CookListProvider({ children }) {
-    const [cookList, setCookList] = useState([]);
+export const CookListProvider = ({ children }) => {
+    const [cookList, setCookList] = useState(() => {
+        const saved = localStorage.getItem('cookList');
+        return saved ? JSON.parse(saved) : [];
+    });
+
+    useEffect(() => {
+        localStorage.setItem('cookList', JSON.stringify(cookList));
+    }, [cookList]);
 
     const addToCookList = (recipe) => {
         if (!cookList.some(r => r.id === recipe.id)) {
