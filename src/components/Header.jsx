@@ -1,9 +1,5 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-
-function Header({ onSearch }) {
-  const [searchQuery, setSearchQuery] = useState('');
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
@@ -39,6 +35,7 @@ const Header = ({ onSearch }) => {
         <nav className="nav-links">
           <Link to="/" className="nav-link">Home</Link>
           <Link to="/favorites" className="nav-link">Favorites</Link>
+          <Link to="/want-to-cook" className='nav-link'>Want to Cook</Link>
         </nav>
         <div className="search-container">
           <input 
@@ -49,13 +46,9 @@ const Header = ({ onSearch }) => {
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={handleKeyDown}
           />
-<<<<<<< HEAD
           <button className="search-button" onClick={handleSearch}>
             Search
           </button>
-=======
-          <button className="search-button" onClick={handleSearch}>Search</button>
->>>>>>> 62cec3eba5c2de1c90d91899267c1bbd9f359741
         </div>
       </div>
     </header>
