@@ -1,72 +1,59 @@
-import RecipeGrid from '../components/RecipeGrid';
 import { useState, useEffect } from 'react';
+import RecipeGrid from '../components/RecipeGrid';
+import LoadingSpinner from '../components/LoadingSpinner';
+import ErrorMessage from '../components/ErrorMessage';
 import { getPopularRecipes } from '../services/recipeService';
 
-// Static recipe data for template
-const staticRecipes = [
-  {
-    id: 1,
-    title: "Spaghetti Carbonara",
-    readyInMinutes: 30,
-    servings: 4,
-    image: "/placeholder.jpg"
-  },
-  {
-    id: 2,
-    title: "Chicken Tikka Masala",
-    readyInMinutes: 45,
-    servings: 6,
-    image: "/placeholder.jpg"
-  },
-  {
-    id: 3,
-    title: "Greek Salad",
-    readyInMinutes: 15,
-    servings: 4,
-    image: "/placeholder.jpg"
-  },
-  {
-    id: 4,
-    title: "Beef Tacos",
-    readyInMinutes: 25,
-    servings: 4,
-    image: "/placeholder.jpg"
-  },
-  {
-    id: 5,
-    title: "Vegetable Stir Fry",
-    readyInMinutes: 20,
-    servings: 3,
-    image: "/placeholder.jpg"
-  },
-  {
-    id: 6,
-    title: "Chocolate Chip Cookies",
-    readyInMinutes: 35,
-    servings: 24,
-    image: "/placeholder.jpg"
-  }
-];
-
-function Home({ searchResults }) {
+function Home({searchResults}) {
   const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
 
   useEffect(() => {
-    const fetchRecipes = async ()=> {
-      const recipeData = await getPopularRecipes();
-      setRecipes(recipeData);
+    const fetchRecipes = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const recipeData = await getPopularRecipes();
+        setRecipes(recipeData);
+      } catch (err) {
+        setError('Failed to load recipes. Please try again later.');
+        console.log(err)
+        setRecipes([]); // Set to empty array to prevent map errors
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchRecipes();
-  }, []);
+  }, []); // Empty dependency array
 
   const displayRecipes = searchResults || recipes;
+  
+  if (loading) {
+    return (
+      <main className="main-content">
+        <LoadingSpinner />
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main className="main-content">
+        <ErrorMessage message={error} />
+      </main>
+    );
+  }
+
+
 
   return (
-    <main className='main-content'>
+    <main className="main-content">
       <div className="content-header">
-        <h2>{searchResults ? 'Search Results' : 'Popular Recipes'}</h2>
-        <p>Discover delicous recipes</p>
+        <h2>Popular Recipes</h2>
+        <p>Discover delicious recipes for every meal</p>
       </div>
       <RecipeGrid recipes={displayRecipes} />
     </main>

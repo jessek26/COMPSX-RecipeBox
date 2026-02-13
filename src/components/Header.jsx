@@ -1,6 +1,21 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const Header = () => {
+const Header = ({ onSearch }) => {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      onSearch(searchQuery);
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   return (
     <header className="header">
       <div className="header-content">
@@ -14,8 +29,13 @@ const Header = () => {
             type="text" 
             placeholder="Search recipes..."
             className="search-input"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
-          <button className="search-button">Search</button>
+          <button className="search-button" onClick={handleSearch}>
+            Search
+          </button>
         </div>
       </div>
     </header>
