@@ -1,5 +1,21 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+
+function Header({ onSearch }) {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      onSearch(searchQuery);
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if ((e).key === 'Enter') {
+      handleSearch();
+    }
+  };
 
 const Header = ({ onSearch }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -33,9 +49,13 @@ const Header = ({ onSearch }) => {
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={handleKeyDown}
           />
+<<<<<<< HEAD
           <button className="search-button" onClick={handleSearch}>
             Search
           </button>
+=======
+          <button className="search-button" onClick={handleSearch}>Search</button>
+>>>>>>> 62cec3eba5c2de1c90d91899267c1bbd9f359741
         </div>
       </div>
     </header>

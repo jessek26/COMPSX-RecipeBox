@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useEffect, useState } from 'react';
 
 function RecipeCard({ recipe }) {
@@ -13,6 +14,24 @@ function RecipeCard({ recipe }) {
     const favorites = JSON.parse(localStorage.getItem('favoriteRecipe')) || [];
     
     if (isFavorite) {
+=======
+import { useState, useEffect } from "react";
+
+function RecipeCard ({ recipe }) {
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect (() => {
+    const favorites = JSON.parse(localStorage.getItem('favoriteRecipe'))
+   || []; 
+    const isRecipeFavorite = favorites.some(fave => fave.id === recipe.id);
+    setIsFavorite(isRecipeFavorite);
+}, [recipe.id]); 
+
+  const toggleFavorite = () => {
+    const favorites = JSON.parse(localStorage.getItem('favoriteRecipe')) || [];
+
+    if(isFavorite) {
+>>>>>>> 62cec3eba5c2de1c90d91899267c1bbd9f359741
       const updatedFavorites = favorites.filter(fav => fav.id !== recipe.id);
       localStorage.setItem('favoriteRecipe', JSON.stringify(updatedFavorites));
       setIsFavorite(false);
