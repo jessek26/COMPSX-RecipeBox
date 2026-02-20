@@ -232,3 +232,98 @@ body {
     gap: 1.5rem;
   }
 }
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  min-height: 400px;
+}
+
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #ff6b6b;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-container p {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.error-container {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #666;
+}
+
+.error-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.error-container h3 {
+  color: #ff6b6b;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.error-container p {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.favorite-button,
+.cook-list-button {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #ff6b6b;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: all 0.3s;
+  margin-bottom: 0.5rem;
+}
+
+.favorite-button {
+  background-color: #fff;
+  color: #ff6b6b;
+}
+
+.favorite-button:hover {
+  background-color: #ff6b6b;
+  color: white;
+}
+
+.favorite-button.favorited {
+  background-color: #ff6b6b;
+  color: white;
+}
+
+.cook-list-button {
+  background-color: #fff;
+  color: #4CAF50;
+  border-color: #4CAF50;
+}
+
+.cook-list-button:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.cook-list-button.added {
+  background-color: #4CAF50;
+  color: white;
+}

@@ -14,16 +14,16 @@ function App() {
 
   const handleSearch = async (query) => {
     const results = await searchRecipes(query);
-    setSearchResutls(results);
-  }
+    setSearchResults(results);
+  };
 
   return (
     <AuthProvider>
     <Router>
       <div className="app">
-        <Header onSearch={handleSearch}/>
+        <Header onSearch={handleSearch} />
         <Routes>
-          <Route path="/" element={<Home searchResults={searchResults}/>} />
+          <Route path="/" element={<Home searchResults={searchResults} />} />
           <Route path="/favorites" element={<Favorites />} />
           <Route path='/login' element={<Login />} />
         </Routes>

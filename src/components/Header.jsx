@@ -2,7 +2,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 
-function Header({ onSearch }) {
+  const handleKeyDown = (e) => {
+    if ((e).key === 'Enter') {
+      handleSearch();
+    }
+  };
+
+const Header = ({ onSearch }) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   //intialize userm isAuthenticated, loout, adn navigate
@@ -22,7 +28,7 @@ function Header({ onSearch }) {
   };
 
   const handleKeyDown = (e) => {
-    if ((e).key === 'Enter') {
+    if (e.key === 'Enter') {
       handleSearch();
     }
   };
@@ -34,6 +40,7 @@ function Header({ onSearch }) {
         <nav className="nav-links">
           <Link to="/" className="nav-link">Home</Link>
           <Link to="/favorites" className="nav-link">Favorites</Link>
+          <Link to="/want-to-cook" className='nav-link'>Want to Cook</Link>
         </nav>
         <div className="auth-section">
           {isAuthenticated ? (
@@ -57,7 +64,9 @@ function Header({ onSearch }) {
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={handleKeyDown}
           />
-          <button className="search-button" onClick={handleSearch}>Search</button>
+          <button className="search-button" onClick={handleSearch}>
+            Search
+          </button>
         </div>
       </div>
     </header>

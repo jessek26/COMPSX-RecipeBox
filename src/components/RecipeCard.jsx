@@ -1,19 +1,23 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from 'react';
+import { useCookList } from '../contexts/CookListContext';
 
-function RecipeCard ({ recipe }) {
+const RecipeCard = ({ recipe }) => {
+
+  const { addToCookList, removeFromCookList, isInCookList } = useCookList();
   const [isFavorite, setIsFavorite] = useState(false);
+  const inCookList = isInCookList(recipe.id)
+  //check if recipe is already in "is want to cook"
 
-  useEffect (() => {
-    const favorites = JSON.parse(localStorage.getItem('favoriteRecipe'))
-   || []; 
-    const isRecipeFavorite = favorites.some(fave => fave.id === recipe.id);
+  useEffect(() => {
+    const favorites = JSON.parse(localStorage.getItem('favoriteRecipe')) || [];
+    const isRecipeFavorite = favorites.some(fav => fav.id === recipe.id);
     setIsFavorite(isRecipeFavorite);
-}, [recipe.id]); 
+  }, [recipe.id]);
 
   const toggleFavorite = () => {
     const favorites = JSON.parse(localStorage.getItem('favoriteRecipe')) || [];
-
-    if(isFavorite) {
+    
+    if (isFavorite) {
       const updatedFavorites = favorites.filter(fav => fav.id !== recipe.id);
       localStorage.setItem('favoriteRecipe', JSON.stringify(updatedFavorites));
       setIsFavorite(false);
@@ -21,6 +25,14 @@ function RecipeCard ({ recipe }) {
       favorites.push(recipe);
       localStorage.setItem('favoriteRecipe', JSON.stringify(favorites));
       setIsFavorite(true);
+    }
+  };
+
+  const handleCookListClick = () => {
+    if (inCookList) {
+      removeFromCookList(recipe.id);
+    } else {
+      addToCookList(recipe);
     }
   };
 
@@ -43,6 +55,10 @@ function RecipeCard ({ recipe }) {
           onClick={toggleFavorite}
         >
           {isFavorite ? '♥ Remove from Favorites' : '♡ Add to Favorites'}
+        </button>
+        <button 
+          className={`cook-list-button ${inCookList ? 'added' : ''}`}
+          onClick={handleCookListClick}>{inCookList ? '✓ Want to Cook' : '+ Want to Cook'}
         </button>
       </div>
     </div>
