@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 import { AuthProvider } from './context/AuthContext';
 import  Login  from './components/Login'
 import { CookListProvider } from './contexts/CookListContext';
-
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   const [searchResults, setSearchResults] = useState(null);
@@ -26,7 +26,11 @@ function App() {
         <Header onSearch={handleSearch} />
         <Routes>
           <Route path="/" element={<Home searchResults={searchResults} />} />
-          <Route path="/favorites" element={<Favorites />} />
+          <Route path="/favorites" 
+          element={
+          <ProtectedRoute>
+          <Favorites />
+          </ProtectedRoute>} />
           <Route path='/login' element={<Login />} />
         </Routes>
       </div>

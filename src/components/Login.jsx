@@ -1,21 +1,31 @@
 import { useState } from 'react';
 import './Login.css';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation} from 'react-router-dom';
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error,setError] = useState('');
   const [role, setRole] = useState('regular');
+
   
   //access context and navigation
   const { login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from || '/';
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    //validation and login logic
+    login(username, password, role);
     
+    //redirect to where they came from
+    navigate(from, { replace: true });
+
     if(!username || !password) {
         setError('Please enter usrename and password.');
         return;
