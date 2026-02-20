@@ -7,10 +7,11 @@ import { searchRecipes } from './services/recipeService';
 import { useState, useEffect } from 'react';
 import { AuthProvider } from './context/AuthContext';
 import  Login  from './components/Login'
+import { CookListProvider } from './contexts/CookListContext';
 
 
 function App() {
-  const [searchResults, setSearchResutls] = useState(null);
+  const [searchResults, setSearchResults] = useState(null);
 
   const handleSearch = async (query) => {
     const results = await searchRecipes(query);
@@ -19,6 +20,7 @@ function App() {
 
   return (
     <AuthProvider>
+    <CookListProvider>
     <Router>
       <div className="app">
         <Header onSearch={handleSearch} />
@@ -29,6 +31,7 @@ function App() {
         </Routes>
       </div>
     </Router>
+    </CookListProvider>
     </AuthProvider>
   );
 };
